@@ -30,8 +30,9 @@ function doTracking() {
 			throw err;
 		}
 		if (result.updated) {
-			let rates = result.rates;
-			SmsService.send(`prev: ${rates.prevBuy} curr: ${rates.currBuy}`);
+			let prevBuy = result.rates.prevBuy || '0.000';
+			let currBuy = result.rates.currBuy || '0.000';
+			SmsService.send(`prev: ${prevBuy} curr: ${currBuy}`);
 			debug('%s currency rates updated.', result.currency);
 		}
 	});
