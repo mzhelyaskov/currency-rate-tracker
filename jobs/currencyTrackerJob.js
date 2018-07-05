@@ -7,7 +7,7 @@ let async = require("async");
 
 try {
 	module.exports = new CronJob({
-		cronTime: '00 46 * * * *',
+		cronTime: '00 50 * * * *',
 		onTick: doTracking,
 		start: false,
 		timeZone: 'Europe/Warsaw'
