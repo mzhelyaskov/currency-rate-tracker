@@ -1,6 +1,6 @@
 let CronJob = require('cron').CronJob;
-let debug = require('debug')('DollarRate:server');
-let DollarRateExtractor = require('../services/dollarRateExtractor');
+let debug = require('debug')('app:server');
+let CurrencyRateParser = require('../services/currencyRateParser');
 let CurrencyService = require('../services/currencyService');
 let SmsService = require('../services/smsService');
 let async = require("async");
@@ -20,7 +20,7 @@ function doTracking() {
 	let currency = 'USD';
 	async.waterfall([
 		function (callback) {
-			DollarRateExtractor.extract(currency, callback);
+			CurrencyRateParser.parse(currency, callback);
 		},
 		function (currentRates, callback) {
 			CurrencyService.update(currency, currentRates, callback);

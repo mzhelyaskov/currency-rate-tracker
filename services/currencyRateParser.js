@@ -1,4 +1,4 @@
-let debug = require('debug')('DollarRate:server');
+let debug = require('debug')('app:server');
 let requestPromies = require('request-promise');
 let cheerio = require('cheerio');
 let uri = 'http://kantor.waw.pl/';
@@ -18,7 +18,7 @@ const options = {
 };
 
 module.exports = {
-	extract: function (currency, callback) {
+	parse: function (currency, callback) {
 		let selector = getCurrencySelector(currency);
 		return requestPromies(options)
 			.then(function ($) {
