@@ -1,0 +1,24 @@
+{
+  "name": "dollarrate",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.6.1",
+    "cheerio": "^1.0.0-rc.2",
+    "cookie-parser": "~1.4.3",
+    "cron": "^1.3.0",
+    "debug": "~2.6.9",
+    "ejs-locals": "^1.0.2",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "node-sass-middleware": "0.11.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "sqlite3": "^4.0.1",
+    "twilio": "^3.17.5"
+  }
+}
