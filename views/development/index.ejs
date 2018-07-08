@@ -10,9 +10,10 @@
 </head>
 <body>
 <div class="container-fluid">
+    <span class="float-right">mode: <%= mode %></span>
     <div class="row">
         <div class="col">
-            <h1>Currency rates: v<%= version %></h1>
+            <h1>Currency rate tracker: v<%= version %></h1>
         </div>
     </div>
     <div class="row">
@@ -49,11 +50,12 @@
                 <table class="table table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">id</th>
+                        <th scope="col">row</th>
+                        <th scope="col">operationId</th>
                         <th scope="col">timestamp</th>
-                        <th scope="col">currency</th>
-                        <th scope="col">buy_rate</th>
-                        <th scope="col">sale_rate</th>
+                        <th scope="col">operationName</th>
+                        <th scope="col">status</th>
+                        <th scope="col">description</th>
                     </tr>
                     </thead>
                     <tbody>

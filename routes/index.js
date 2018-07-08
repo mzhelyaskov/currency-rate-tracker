@@ -20,7 +20,8 @@ router.get('/', function (req, res) {
 			throw new Error('Error when getting start page.');
 		}
 		res.render('index', {
-			version: '2.1.0',
+			version: '2.1.4',
+			mode: process.env.NODE_ENV,
 			rates: results.rates,
 			logs: results.logs
 		});
@@ -28,20 +29,3 @@ router.get('/', function (req, res) {
 });
 
 module.exports = router;
-
-function convertToLogDTO(logs) {
-
-}
-
-function convertToRatesDTO(rates) {
-	return rates.map((rate, index) => {
-		return {
-			row: index + 1,
-			id: rate.id,
-			timestamp: dateformat(rate.created_at, 'yyyy-mm-dd HH:MM'),
-			currency: rate.currency,
-			buy: rate.buyRate,
-			sale: rate.saleRate
-		}
-	});
-}
