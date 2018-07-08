@@ -8,7 +8,7 @@ let async = require("async");
 
 try {
 	module.exports = new CronJob({
-		cronTime: '00 * * * * *',
+		cronTime: '00 15 * * * *',
 		onTick: doTracking,
 		start: false,
 		timeZone: 'Europe/Warsaw'
@@ -46,7 +46,7 @@ function doTracking() {
 				status: 'SUCCESS',
 				description: `Rates ${prevBuy} / ${currBuy}`
 			});
-			SmsService.send(`prev: ${prevBuy} curr: ${currBuy}`);
+			SmsService.send(`pre: ${prevBuy} / cur: ${currBuy}`);
 			OperationLog.create({
 				operationId: operationId,
 				operationName: `Sent message`,
