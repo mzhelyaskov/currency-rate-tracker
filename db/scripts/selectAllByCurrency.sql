@@ -1,1 +1,0 @@
-select * from currency_rates where currency = ?;

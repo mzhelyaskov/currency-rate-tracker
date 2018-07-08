@@ -1,49 +1,40 @@
-let sqlite3 = require('sqlite3').verbose();
+'use strict';
+
 let fs = require('fs');
-let db = new sqlite3.Database('./db/currency-rates.db', function(err) {
-	if (err) {
-		console.error(err.message);
+let path = require('path');
+let Sequelize = require('sequelize');
+let basename = path.basename(__filename);
+let env = process.env.NODE_ENV || 'development';
+let config = require(__dirname + '/db-config.json')[env];
+let db = {};
+
+let sequelize = new Sequelize(config.database, config.username, config.password, {
+	dialect: "sqlite",
+	storage: path.join(__dirname, 'currency-rates.db'),
+	define: {
+		underscored: true,
+		freezeTableName: true
 	}
-	console.log('Connected to the currency-rates database.');
 });
 
-module.exports = {
-	db: db,
-	run: function (scriptName, params, callback) {
-		readScript(scriptName, function (err, sql) {
-			if (err) {
-				callback(err);
-				return;
-			}
-			db.run(sql, params, callback);
-		});
-	},
-	getAll: function (scriptName, params, callback) {
-		readScript(scriptName, function (err, sql) {
-			if (err) {
-				callback(err);
-				return;
-			}
-			db.all(sql, params, callback);
-		});
-	},
-	init: function (callback) {
-		db.serialize(() => {
-			this.run('currencyRatesInit', [], callback);
-		});
-	}
-};
-
-function readScript(scriptName, callback) {
-	fs.readFile(getPath(scriptName), (err, sql) => {
-		if (err) {
-			callback(err);
-			return;
-		}
-		callback(null, sql.toString());
+const modelsPath = path.join(__dirname, 'models');
+fs
+	.readdirSync(modelsPath)
+	.filter(file => {
+		return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+	})
+	.forEach(file => {
+		let model = sequelize['import'](path.join(modelsPath, file));
+		db[model.name] = model;
 	});
-}
 
-function getPath(scriptName) {
-	return './db/scripts/' + scriptName + '.sql';
-}
+Object.keys(db).forEach(modelName => {
+	if (db[modelName].associate) {
+		db[modelName].associate(db);
+	}
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;

@@ -1,51 +1,68 @@
-let DbService = require('../db');
+let db = require('../db');
+let CurrencyRate = db['CurrencyRate'];
+let OperationLog = db['OperationLog'];
 
 module.exports = {
-	getAll: function (country, callback) {
-		DbService.getAll('selectAllByCurrency', [country], callback);
-	},
-	getLast: function (currency, callback) {
-		DbService.getAll('selectLastRates', [currency], (err, rows) => {
-			if (err) {
-				callback(err);
-				return;
+	update: function (operationId, currency, currentRates) {
+		return findPreviousRate(operationId, currency).then(previousRates => {
+			if (areRatesDifferent(currentRates, previousRates)) {
+				return insertNewRates(operationId, currency, currentRates).then(() => {
+					return getUpdateResult(true, currency, previousRates, currentRates);
+				});
 			}
-			callback(null, {buyRate: rows[0].buy_rate, saleRate: rows[0].sale_rate});
-		});
-	},
-	update: function (currency, currentRates, callback) {
-		this.getLast('USD', function (err, previousRates) {
-			if (err) {
-				callback(err);
-				return;
-			}
-			if (isRateDifferent(currentRates, previousRates)) {
-				insertAndGetResult(currency, previousRates, currentRates, callback);
-			} else {
-				callback(null, {updated: false});
-			}
+			return getUpdateResult();
 		});
 	}
 };
 
-function insertAndGetResult(currency, previousRates, currentRates, callback) {
-	let currBuy = currentRates.buyRate;
-	let currSale = currentRates.saleRate;
-	let prevBuy = previousRates.buyRate;
-	let prevSale = previousRates.saleRate;
-	DbService.run('insertRates', [currency, currBuy, currSale], (err) => {
-		if (err) {
-			callback(err);
-			return;
-		}
-		callback(null, {
-			updated: true,
-			currency: currency,
-			rates: {prevBuy, prevSale, currBuy, currSale}
+function findPreviousRate(operationId, currency) {
+	return CurrencyRate.findOne({
+		where: {currency: currency},
+		order: [['id', 'DESC']]
+	}).then(rate => {
+		let buyRate = rate && rate.buyRate;
+		let saleRate = rate && rate.saleRate;
+		OperationLog.create({
+			operationId: operationId,
+			operationName: `Find previous rate for ${currency}`,
+			status: 'SUCCESS',
+			description: `Previous rates ${buyRate} / ${saleRate}`
 		});
+		return rate;
+	})
+}
+
+function insertNewRates(operationId, currency, rates) {
+	return CurrencyRate.create({
+		currency: currency,
+		buyRate: rates.buyRate,
+		saleRate: rates.saleRate
+	}).then(rate => {
+		OperationLog.create({
+			operationId: operationId,
+			operationName: `Insert new rates for ${currency}`,
+			status: 'SUCCESS',
+			description: `Rates: ${rate.buyRate} / ${rate.saleRate}`
+		});
+		return rate;
 	});
 }
 
-function isRateDifferent(currentRates, previousRates) {
-	return currentRates.buyRate !== previousRates.buyRate;
+function areRatesDifferent(currentRates, previousRates) {
+	return previousRates && currentRates
+		? currentRates.buyRate !== previousRates.buyRate
+		: true;
+}
+
+function getUpdateResult(updated, currency, previousRates, currentRates) {
+	return {
+		updated: !!updated,
+		currency: currency,
+		rates: {
+			prevBuy: previousRates && previousRates.buyRate,
+			prevSale: previousRates && previousRates.saleRate,
+			currBuy: currentRates && currentRates.buyRate,
+			currSale: currentRates && currentRates.saleRate
+		}
+	};
 }

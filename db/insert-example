@@ -1,6 +1,0 @@
-db.run('INSERT INTO currency_rates(country, buy_rate, sale_rate) VALUES(?, ?, ?)', ['USA', '123', '321'], function (err) {
-	if (err) {
-		return console.log(err.message);
-	}
-	console.log('A row has been inserted with rowid ' + this.lastID);
-});

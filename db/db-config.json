@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "currency_rates",
+    "host": "127.0.0.1",
+    "dialect": "sqlite",
+    "storage": "db/currency-rates.db",
+    "define": {
+      "underscored": true,
+      "freezeTableName": true
+    }
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "currency_rates",
+    "host": "127.0.0.1",
+    "dialect": "sqlite",
+    "storage": "db/currency-rates.db",
+    "define": {
+      "underscored": true,
+      "freezeTableName": true
+    }
+  }
+}

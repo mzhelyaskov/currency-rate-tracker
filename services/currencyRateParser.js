@@ -1,7 +1,7 @@
-let debug = require('debug')('app:server');
 let requestPromies = require('request-promise');
 let cheerio = require('cheerio');
 let uri = 'http://kantor.waw.pl/';
+let OperationLog = require('../db')['OperationLog'];
 
 const currencyRateSelectors = {
 	'USD': {
@@ -18,18 +18,38 @@ const options = {
 };
 
 module.exports = {
-	parse: function (currency, callback) {
+	parse: function (operationId, currency) {
+		OperationLog.create({
+			operationId: operationId,
+			operationName: `Parse rates for ${currency}`,
+			status: 'IN PROGRESS'
+		});
 		let selector = getCurrencySelector(currency);
 		return requestPromies(options)
 			.then(function ($) {
-				callback(null, {
-					buyRate: $(selector.buy).html(),
-					saleRate: $(selector.sale).html()
+				let buyRate = parseFloat($(selector.buy).html());
+				let saleRate = parseFloat($(selector.sale).html());
+				OperationLog.create({
+					operationId: operationId,
+					operationName: `Parse rates for ${currency}`,
+					status: 'SUCCESS',
+					description: `Rates: ${buyRate} / ${saleRate}`
 				});
+				return {
+					buyRate: buyRate,
+					saleRate: saleRate
+				}
 			})
-			.catch(function (err) {
-				callback(err);
-				debug('Error when getting data from %s', uri, err);
+			.catch(function () {
+				let message = `Error when getting data from ${uri}`;
+				OperationLog.create({
+					operationId: operationId,
+					operationName: `Parse rates for ${currency}`,
+					status: 'ERROR',
+					description: message
+				});
+				console.error(message);
+				throw new Error(message);
 			});
 	}
 };
