@@ -6,15 +6,14 @@
 </head>
 <body>
 <div class="container-fluid">
-    <span class="float-right">mode: <%= mode %></span>
     <div class="row">
-        <div class="col">
-            <h1>Currency rate tracker: v<%= version %></h1>
+        <div class="col-12">
+            <span class="float-right"><%= mode %> mode: (v<%= version %>)</span>
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
-            <h2>Operation log:</h2>
+        <div class="col-6">
+            <h2>Rate history:</h2>
             <div class="table-container">
                 <table class="table table-sm">
                     <thead>
@@ -28,30 +27,30 @@
                     </thead>
                     <tbody>
                     <% rates.forEach(function(rate){ %>
-                        <tr>
-                            <th scope="row"><%= rate.row %></th>
-                            <td><%= rate.timestamp %></td>
-                            <td><%= rate.currency %></td>
-                            <td><%= rate.buy %></td>
-                            <td><%= rate.sale %></td>
-                        </tr>
+                    <tr>
+                        <th scope="row"><%= rate.row %></th>
+                        <td><%= rate.timestamp %></td>
+                        <td><%= rate.currency %></td>
+                        <td><%= rate.buy %></td>
+                        <td><%= rate.sale %></td>
+                    </tr>
                     <% }); %>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col-8">
-            <h2>Rate history:</h2>
+        <div class="col-6">
+            <h2>Operation log:</h2>
             <div class="table-container">
                 <table class="table table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">row</th>
-                        <th scope="col">operationId</th>
-                        <th scope="col">timestamp</th>
-                        <th scope="col">operationName</th>
-                        <th scope="col">status</th>
-                        <th scope="col">description</th>
+                        <th scope="col">#</th>
+                        <th scope="col">OperationId</th>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">OperationName</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Description</th>
                     </tr>
                     </thead>
                     <tbody>
