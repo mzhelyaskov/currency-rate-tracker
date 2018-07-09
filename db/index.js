@@ -10,6 +10,7 @@ let db = {};
 
 let sequelize = new Sequelize(config.database, config.username, config.password, {
 	dialect: "sqlite",
+	dialectOptions: { useUTC: false, },
 	storage: path.join(__dirname, 'currency-rates.db'),
 	define: {
 		underscored: true,

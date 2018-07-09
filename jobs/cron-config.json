@@ -3,6 +3,6 @@
     "cronTime": "00 * * * * *"
   },
   "production": {
-    "cronTime": "00 33 * * * *"
+    "cronTime": "00 * * * * *"
   }
 }
