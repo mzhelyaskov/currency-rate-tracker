@@ -1,6 +1,6 @@
 {
   "development": {
-    "cronTime": "50 * * * *"
+    "cronTime": "50 * * * * *"
   },
   "production": {
     "cronTime": "50 * * * *"
