@@ -1,8 +1,8 @@
 {
   "development": {
-    "cronTime": "00 * * * * *"
+    "cronTime": "25 * * * *"
   },
   "production": {
-    "cronTime": "00 07 * * * *"
+    "cronTime": "25 * * * *"
   }
 }
