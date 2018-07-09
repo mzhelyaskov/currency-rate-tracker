@@ -3,25 +3,29 @@ let OperationLog = db['OperationLog'];
 let dateformat = require('dateformat');
 
 module.exports = {
-	getAll: function (params) {
+	getLast: function (limit = 50, operationId) {
 		return OperationLog.findAll({
-			where: params.operationId ? {operationId: params.operationId} : {},
-			limit: params.limit
-		}).then(logs => {
-			return logs.map((log, index) => {
-				return convertToDTO(index + 1, log);
-			});
+			where: operationId ? {operationId: operationId} : {},
+			limit: limit,
+			order: [['id', 'DESC']]
+		}).then(rows => {
+			return rows
+				.sort((a, b) => a.id - b.id)
+				.map((row, index) => {
+					return convertToDTO(index + 1, row);
+				});
 		});
 	}
 };
 
-function convertToDTO(row, log) {
+function convertToDTO(index, row) {
 	return {
-		row: row,
-		operationId: log.operationId,
-		timestamp: dateformat(log.created_at, 'yyyy-mm-dd HH:MM'),
-		operationName: log.operationName,
-		status: log.status,
-		description: log.description
+		rowNum: index,
+		id: row.id,
+		operationId: row.operationId,
+		timestamp: dateformat(row.created_at, 'dd-mm HH:MM'),
+		operationName: row.operationName,
+		status: row.status,
+		description: row.description
 	}
 }

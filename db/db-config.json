@@ -5,7 +5,7 @@
     "database": "currency_rate_tracker",
     "host": "localhost",
     "dialect": "mysql",
-    "timezone": "Europe/Warsaw",
+    "timezone": "+2:00",
     "define": {
       "underscored": true,
       "freezeTableName": true
@@ -17,7 +17,7 @@
     "database": "currency_tracker",
     "host": "db4free.net",
     "dialect": "mysql",
-    "timezone": "Europe/Warsaw",
+    "timezone": "+02:00",
     "define": {
       "underscored": true,
       "freezeTableName": true

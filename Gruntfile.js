@@ -41,9 +41,9 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				files: {
-					'public/stylesheets/style.css': 'public/scss/style.scss',
 					'public/stylesheets/bootstrap.css': 'public/libs/bootstrap/scss/bootstrap.scss',
-					'public/stylesheets/fontawesome.css': 'public/libs/components-font-awesome/scss/fontawesome.scss'
+					'public/stylesheets/fontawesome.css': 'public/libs/components-font-awesome/scss/fontawesome.scss',
+					'public/stylesheets/style.css': 'public/scss/style.scss',
 				}
 			}
 		},

@@ -16,7 +16,7 @@ function convertToDTO(row, rate) {
 	return {
 		row: row,
 		id: rate.id,
-		timestamp: dateformat(rate.created_at, 'yyyy-mm-dd HH:MM'),
+		timestamp: dateformat(rate.created_at, 'dd-mm HH:MM'),
 		currency: rate.currency,
 		buy: rate.buyRate,
 		sale: rate.saleRate

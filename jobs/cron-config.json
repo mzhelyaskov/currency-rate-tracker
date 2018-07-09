@@ -1,10 +1,10 @@
 {
   "development": {
     "cronTime": "50 * * * * *",
-    "interval": 60000
+    "interval": 10000
   },
   "production": {
     "cronTime": "50 * * * * *",
-    "interval": 600000
+    "interval": 900000
   }
 }

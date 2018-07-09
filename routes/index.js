@@ -19,17 +19,13 @@ router.get('/', function (req, res) {
 			RatesGetter.getAll().then(rates => callback(null, rates));
 		},
 		logs: function(callback) {
-			LogGetter.getAll({
-				operationId: operationId,
-				limit: 50
-			}).then(logs => callback(null, logs));
+			LogGetter.getLast(50, operationId).then(logs => callback(null, logs));
 		}
 	}, function(err, results) {
 		if (err) {
 			throw new Error('Error when getting start page.');
 		}
 		res.render('index', {
-			version: '2.3.1',
 			resetLogBtnExist: !!operationId,
 			interval: cronConfig.interval,
 			mode: process.env.NODE_ENV,

@@ -1,7 +1,7 @@
 let CurrencyRateParser = require('../services/currencyRateParser');
 let CurrencyService = require('../services/currencyService');
 let SmsService = require('../services/smsService');
-let OperationLog = require('../db')['OperationLog'];
+let LogService = require('../services/logService');
 let shortid = require('shortid');
 let async = require("async");
 let env = process.env.NODE_ENV || 'development';
@@ -9,56 +9,76 @@ let cronConfig = require(__dirname + '/cron-config.json')[env];
 
 module.exports = {
 	start: function () {
-		OperationLog.create({
-			operationId: 0,
-			operationName: `Task started`,
-			status: 'SUCCESS'
-		});
-		setInterval(doTracking, cronConfig.interval);
+		setInterval(function () {
+			doTracking(LogService.getLogger(shortid.generate()));
+		}, cronConfig.interval);
 	}
 };
 
-function doTracking() {
+function doTracking(logger) {
+	logger.info({operationName: `Task started`});
 	let currency = 'USD';
-	let operationId = shortid.generate();
-	OperationLog.create({
-		operationId: operationId,
-		operationName: `Start tracking`,
-		status: 'SUCCESS'
-	});
-	async.waterfall([
-		function (callback) {
-			CurrencyRateParser.parse(operationId, currency).then(
-				rates => callback(null, rates),
-				error => callback(error)
+	async.parallel({
+		currRates: function(callback) {
+			let operationName = `Parsing rates for ${currency}`;
+			CurrencyRateParser.parse(currency).then(
+				rates => {
+					logger.success({
+						operationName: operationName,
+						description: `Rates: ${rates.buyRate} / ${rates.saleRate}`
+					});
+					callback(null, rates);
+				},
+				error => {
+					logger.error({
+						operationName: operationName,
+						description: `Error on parsing rates`
+					});
+					callback(error);
+				}
 			);
 		},
-		function (rates, callback) {
-			CurrencyService.update(operationId, currency, rates).then(results => {
-				callback(null, results);
+		prevRates: function(callback) {
+			CurrencyService.findPreviousRates(currency).then(rates => {
+				let buyRate = rates && rates.buyRate || 0;
+				let saleRate = rates && rates.saleRate || 0;
+				logger.success({
+					operationName: `Got prev rates for ${currency}`,
+					description: `Previous rates ${buyRate} / ${saleRate}`
+				});
+				callback(null, {buyRate, saleRate});
 			});
 		}
-	], function (error, result) {
-		if (error) {
+	}, function(err, results) {
+		if (err) {
+			console.error('Error when getting start page.');
 			return;
 		}
-		if (result.updated) {
-			let prevBuy = result.rates.prevBuy || 0;
-			let currBuy = result.rates.currBuy || 0;
-			SmsService.send(`pre: ${prevBuy} / cur: ${currBuy}`);
-			OperationLog.create({
-				operationId: operationId,
-				operationName: `Sending message`,
-				status: 'SUCCESS',
-				description: `Previous rates ${prevBuy} / ${currBuy}`
+		if (areRatesDifferent(results.prevRates, results.currRates)) {
+			CurrencyService.addRates(currency, results.currRates).then(() => {
+				let prevBuy = results.prevRates.buyRate || 0;
+				let currBuy = results.currRates.buyRate || 0;
+				let smsMessage = `pre: ${prevBuy} / cur: ${currBuy}`;
+				SmsService.send(smsMessage);
+				logger.info({
+					operationName: `Sent sms`,
+					description: smsMessage
+				});
 			});
 		} else {
-			OperationLog.create({
-				operationId: operationId,
+			logger.success({
 				operationName: `Parse finished`,
-				status: 'SUCCESS',
 				description: `Rates haven't changed.`
 			});
 		}
 	});
+}
+
+function areRatesDifferent(current, previous) {
+	if (previous === current) {
+		return false;
+	}
+	return previous && current
+		? current.buyRate !== previous.buyRate || current.saleRate !== previous.saleRate
+		: true;
 }
