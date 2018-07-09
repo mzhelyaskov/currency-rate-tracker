@@ -2,3 +2,4 @@
 *.iml
 node_modules/
 public/libs/
+db/currency-rates.db

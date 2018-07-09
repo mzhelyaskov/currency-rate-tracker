@@ -9,6 +9,11 @@ let cronConfig = require(__dirname + '/cron-config.json')[env];
 
 module.exports = {
 	start: function () {
+		OperationLog.create({
+			operationId: 0,
+			operationName: `Task started`,
+			status: 'SUCCESS'
+		});
 		setInterval(doTracking, cronConfig.interval);
 	}
 };
