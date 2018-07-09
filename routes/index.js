@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
 			throw new Error('Error when getting start page.');
 		}
 		res.render('index', {
-			version: '2.2.7',
+			version: '2.3.1',
 			resetLogBtnExist: !!operationId,
 			interval: cronConfig.interval,
 			mode: process.env.NODE_ENV,
