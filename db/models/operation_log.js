@@ -6,13 +6,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			field: 'operation_id'
 		},
-		created_at: {
+		createdAt: {
 			type: DataTypes.DATE,
-			get() {
-				const createdAt = this.getDataValue('created_at');
-				createdAt.setTime(createdAt.getTime() + (2 * 60 * 60 * 1000));
-				return createdAt;
-			}
+			field: 'created_at'
 		},
 		operationName: {
 			type: DataTypes.STRING,

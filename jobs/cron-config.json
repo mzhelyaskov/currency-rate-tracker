@@ -5,6 +5,6 @@
   },
   "production": {
     "cronTime": "50 * * * * *",
-    "interval": 900000
+    "interval": 600000
   }
 }

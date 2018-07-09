@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-4">
             <h2>Rate history:</h2>
             <div class="table-container">
                 <table class="table table-sm">
@@ -46,7 +46,10 @@
                 </table>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-8">
+            <% if (resetLogBtnExist) { %>
+            <a href="/" class="float-right">Reset filter</a>
+            <% } %>
             <h2>Operation log:</h2>
             <div class="table-container">
                 <table class="table table-sm">
@@ -64,7 +67,7 @@
                     <% logs.forEach(function(log){ %>
                     <tr class="<%= log.status === 'ERROR' ? 'warning-row' : ''%>">
                         <th scope="row"><%= log.row %></th>
-                        <td><%= log.operationId %></td>
+                        <td><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
                         <td><%= log.timestamp %></td>
                         <td><%= log.operationName %></td>
                         <td><%= log.status %></td>

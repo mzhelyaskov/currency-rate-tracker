@@ -3,8 +3,11 @@ let OperationLog = db['OperationLog'];
 let dateformat = require('dateformat');
 
 module.exports = {
-	getAll: function (limit) {
-		return OperationLog.findAll({limit: limit}).then(logs => {
+	getAll: function (params) {
+		return OperationLog.findAll({
+			where: params.operationId ? {operationId: params.operationId} : {},
+			limit: params.limit
+		}).then(logs => {
 			return logs.map((log, index) => {
 				return convertToDTO(index + 1, log);
 			});

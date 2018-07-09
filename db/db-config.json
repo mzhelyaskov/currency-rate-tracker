@@ -1,23 +1,23 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "currency_rates",
-    "host": "127.0.0.1",
-    "dialect": "sqlite",
-    "storage": "db/currency-rates.db",
+    "password": "root",
+    "database": "currency_rate_tracker",
+    "host": "localhost",
+    "dialect": "mysql",
+    "timezone": "Europe/Warsaw",
     "define": {
       "underscored": true,
       "freezeTableName": true
     }
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "currency_rates",
-    "host": "127.0.0.1",
-    "dialect": "sqlite",
-    "storage": "db/currency-rates.db",
+    "username": "c_tracker",
+    "password": "currency",
+    "database": "currency_tracker",
+    "host": "db4free.net",
+    "dialect": "mysql",
+    "timezone": "Europe/Warsaw",
     "define": {
       "underscored": true,
       "freezeTableName": true

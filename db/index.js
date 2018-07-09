@@ -8,14 +8,7 @@ let env = process.env.NODE_ENV || 'development';
 let config = require(__dirname + '/db-config.json')[env];
 let db = {};
 
-let sequelize = new Sequelize(config.database, config.username, config.password, {
-	dialect: "sqlite",
-	storage: path.join(__dirname, 'currency-rates.db'),
-	define: {
-		underscored: true,
-		freezeTableName: true
-	}
-});
+let sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 const modelsPath = path.join(__dirname, 'models');
 fs
