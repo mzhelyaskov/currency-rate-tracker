@@ -1,4 +1,3 @@
-let CronJob = require('cron').CronJob;
 let CurrencyRateParser = require('../services/currencyRateParser');
 let CurrencyService = require('../services/currencyService');
 let SmsService = require('../services/smsService');
@@ -8,16 +7,11 @@ let async = require("async");
 let env = process.env.NODE_ENV || 'development';
 let cronConfig = require(__dirname + '/cron-config.json')[env];
 
-try {
-	module.exports = new CronJob({
-		cronTime: cronConfig.cronTime,
-		onTick: doTracking,
-		start: false,
-		timeZone: 'Europe/Warsaw'
-	});
-} catch (ex) {
-	console.log("Cron pattern not valid");
-}
+module.exports = {
+	start: function () {
+		setInterval(doTracking, cronConfig.interval);
+	}
+};
 
 function doTracking() {
 	let currency = 'USD';
@@ -46,19 +40,19 @@ function doTracking() {
 		if (result.updated) {
 			let prevBuy = result.rates.prevBuy || 0;
 			let currBuy = result.rates.currBuy || 0;
-			console.log('Currency rates updated.');
-			OperationLog.create({
-				operationId: operationId,
-				operationName: `${result.currency} currency rates updated.`,
-				status: 'SUCCESS',
-				description: `Rates ${prevBuy} / ${currBuy}`
-			});
 			SmsService.send(`pre: ${prevBuy} / cur: ${currBuy}`);
 			OperationLog.create({
 				operationId: operationId,
 				operationName: `Sent message`,
 				status: 'SUCCESS',
 				description: `Previous rates ${prevBuy} / ${currBuy}`
+			});
+		} else {
+			OperationLog.create({
+				operationId: operationId,
+				operationName: `Parse finish`,
+				status: 'SUCCESS',
+				description: `Rates haven't changed.`
 			});
 		}
 	});

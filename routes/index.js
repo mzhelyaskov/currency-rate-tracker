@@ -22,8 +22,8 @@ router.get('/', function (req, res) {
 			throw new Error('Error when getting start page.');
 		}
 		res.render('index', {
-			version: '2.1.8',
-			cronTime: cronConfig.cronTime,
+			version: '2.2.5',
+			interval: cronConfig.interval,
 			mode: process.env.NODE_ENV,
 			rates: results.rates,
 			logs: results.logs

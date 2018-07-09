@@ -19,11 +19,6 @@ const options = {
 
 module.exports = {
 	parse: function (operationId, currency) {
-		OperationLog.create({
-			operationId: operationId,
-			operationName: `Parse rates for ${currency}`,
-			status: 'IN PROGRESS'
-		});
 		let selector = getCurrencySelector(currency);
 		return requestPromies(options)
 			.then(function ($) {
