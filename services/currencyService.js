@@ -24,7 +24,7 @@ function findPreviousRate(operationId, currency) {
 		let saleRate = rate && rate.saleRate;
 		OperationLog.create({
 			operationId: operationId,
-			operationName: `Find previous rate for ${currency}`,
+			operationName: `Searching previous rate for ${currency}`,
 			status: 'SUCCESS',
 			description: `Previous rates ${buyRate} / ${saleRate}`
 		});
@@ -40,7 +40,7 @@ function insertNewRates(operationId, currency, rates) {
 	}).then(rate => {
 		OperationLog.create({
 			operationId: operationId,
-			operationName: `Insert new rates for ${currency}`,
+			operationName: `Inserting new rates for ${currency}`,
 			status: 'SUCCESS',
 			description: `Rates: ${rate.buyRate} / ${rate.saleRate}`
 		});

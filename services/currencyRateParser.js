@@ -26,7 +26,7 @@ module.exports = {
 				let saleRate = parseFloat($(selector.sale).html());
 				OperationLog.create({
 					operationId: operationId,
-					operationName: `Parse rates for ${currency}`,
+					operationName: `Parsing rates for ${currency}`,
 					status: 'SUCCESS',
 					description: `Rates: ${buyRate} / ${saleRate}`
 				});
@@ -39,7 +39,7 @@ module.exports = {
 				let message = `Error when getting data from ${uri}`;
 				OperationLog.create({
 					operationId: operationId,
-					operationName: `Parse rates for ${currency}`,
+					operationName: `Parsing rates for ${currency}`,
 					status: 'ERROR',
 					description: message
 				});

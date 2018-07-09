@@ -8,9 +8,8 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
-		createdAt: {
+		created_at: {
 			type: DataTypes.DATE,
-			field: 'created_at',
 			get() {
 				const createdAt = this.getDataValue('created_at');
 				createdAt.setTime(createdAt.getTime() + (2 * 60 * 60 * 1000));

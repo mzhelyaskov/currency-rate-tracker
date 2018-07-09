@@ -43,14 +43,14 @@ function doTracking() {
 			SmsService.send(`pre: ${prevBuy} / cur: ${currBuy}`);
 			OperationLog.create({
 				operationId: operationId,
-				operationName: `Sent message`,
+				operationName: `Sending message`,
 				status: 'SUCCESS',
 				description: `Previous rates ${prevBuy} / ${currBuy}`
 			});
 		} else {
 			OperationLog.create({
 				operationId: operationId,
-				operationName: `Parse finish`,
+				operationName: `Parse finished`,
 				status: 'SUCCESS',
 				description: `Rates haven't changed.`
 			});
