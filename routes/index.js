@@ -6,6 +6,8 @@ let OperationLog = db['OperationLog'];
 let RatesGetter = require('../dto/ratesGetter');
 let LogGetter = require('../dto/logGetter');
 let async = require("async");
+let env = process.env.NODE_ENV || 'development';
+let cronConfig = require('../jobs/cron-config.json')[env];
 
 router.get('/', function (req, res) {
 	async.parallel({
@@ -21,6 +23,7 @@ router.get('/', function (req, res) {
 		}
 		res.render('index', {
 			version: '2.1.4',
+			cronTime: cronConfig.cronTime,
 			mode: process.env.NODE_ENV,
 			rates: results.rates,
 			logs: results.logs

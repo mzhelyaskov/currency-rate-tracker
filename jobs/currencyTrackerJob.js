@@ -5,10 +5,12 @@ let SmsService = require('../services/smsService');
 let OperationLog = require('../db')['OperationLog'];
 let shortid = require('shortid');
 let async = require("async");
+let env = process.env.NODE_ENV || 'development';
+let cronConfig = require(__dirname + '/cron-config.json')[env];
 
 try {
 	module.exports = new CronJob({
-		cronTime: '00 15 * * * *',
+		cronTime: cronConfig.cronTime,
 		onTick: doTracking,
 		start: false,
 		timeZone: 'Europe/Warsaw'
@@ -20,6 +22,11 @@ try {
 function doTracking() {
 	let currency = 'USD';
 	let operationId = shortid.generate();
+	OperationLog.create({
+		operationId: operationId,
+		operationName: `Start tracking`,
+		status: 'SUCCESS'
+	});
 	async.waterfall([
 		function (callback) {
 			CurrencyRateParser.parse(operationId, currency).then(
