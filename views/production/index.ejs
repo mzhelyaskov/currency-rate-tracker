@@ -17,6 +17,7 @@
     <div class="row">
         <div class="col-5">
             <h2>Rate history:</h2>
+            <div id="currency-chart" style="height: 250px;"></div>
             <div class="table-container">
                 <table class="table table-sm">
                     <thead>
@@ -50,10 +51,10 @@
             <table class="table table-sm table-striped table-header">
                 <thead>
                 <tr>
-                    <th scope="col">OperationId</th>
-                    <th scope="col">Timestamp</th>
-                    <th scope="col">OperationName</th>
-                    <th scope="col">Status</th>
+                    <th scope="col" width="120px">OperationId</th>
+                    <th scope="col" width="120px">Timestamp</th>
+                    <th scope="col" width="220px">OperationName</th>
+                    <th scope="col" width="120px">Status</th>
                     <th scope="col">Description</th>
                 </tr>
                 </thead>
@@ -63,10 +64,10 @@
                     <tbody>
                     <% logs.forEach(function(log){ %>
                     <tr class="<%= log.status === 'ERROR' ? 'warning-row' : ''%>">
-                        <td><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
-                        <td><%= log.timestamp %></td>
-                        <td><%= log.operationName %></td>
-                        <td><%= log.status %></td>
+                        <td width="120px"><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
+                        <td width="120px"><%= log.timestamp %></td>
+                        <td width="220px"><%= log.operationName %></td>
+                        <td width="120px"><%= log.status %></td>
                         <td><%= log.description %></td>
                     </tr>
                     <% }); %>
