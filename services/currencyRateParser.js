@@ -25,7 +25,6 @@ module.exports = {
 				let buyRate = parseFloat($(selector.buy).html());
 				let saleRate = parseFloat($(selector.sale).html());
 				return {
-					date: dateformat(new Date(), 'yy-mm-dd'),
 					buyRate: buyRate,
 					saleRate: saleRate
 				}

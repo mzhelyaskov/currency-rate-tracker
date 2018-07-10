@@ -35,7 +35,7 @@ function getAverageRates(rates) {
 
 function convertToChardDTO(rate) {
 	return {
-		date: dateformat(rate.created_at, 'yy-mm-dd'),
+		date: dateformat(rate.created_at, 'yyyy-mm-dd'),
 		buyRate: rate.buyRate
 	}
 }

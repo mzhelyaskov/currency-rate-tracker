@@ -24,11 +24,14 @@ function doTracking(logger) {
 			let operationName = `Parsing rates for ${currency}`;
 			CurrencyRateParser.parse(currency).then(
 				rates => {
+					let date = dateformat(new Date(), 'yyyy-mm-dd');
+					let buyRate = rates.buyRate;
+					let saleRate = rates.saleRate;
 					logger.success({
 						operationName: operationName,
-						description: `Rates: ${rates.buyRate} / ${rates.saleRate}`
+						description: `Rates: ${buyRate} / ${saleRate}`
 					});
-					callback(null, rates);
+					callback(null, {date, buyRate, saleRate});
 				},
 				error => {
 					logger.error({
@@ -41,7 +44,7 @@ function doTracking(logger) {
 		},
 		prevRates: function(callback) {
 			CurrencyService.findPreviousRates(currency).then(rates => {
-				let date = dateformat(rates.createdAt, 'yy-mm-dd');
+				let date = dateformat(rates.createdAt, 'yyyy-mm-dd');
 				let buyRate = rates && rates.buyRate || 0;
 				let saleRate = rates && rates.saleRate || 0;
 				logger.success({
