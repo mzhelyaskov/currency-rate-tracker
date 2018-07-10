@@ -4,6 +4,7 @@ let SmsService = require('../services/smsService');
 let LogService = require('../services/logService');
 let shortid = require('shortid');
 let async = require("async");
+let dateFormat = require('dateFormat');
 let env = process.env.NODE_ENV || 'development';
 let cronConfig = require(__dirname + '/cron-config.json')[env];
 
@@ -78,7 +79,12 @@ function areRatesDifferent(current, previous) {
 	if (previous === current) {
 		return false;
 	}
-	return previous && current
-		? current.buyRate !== previous.buyRate || current.saleRate !== previous.saleRate
-		: true;
+	if (!previous || !current) {
+		return true;
+	}
+	if (current.buyRate !== previous.buyRate || current.saleRate !== previous.saleRate) {
+		return true;
+	}
+	let currDate = dateFormat(current.createdAt, 'yy-mm-dd');
+	return currDate !== previous.date;
 }

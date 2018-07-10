@@ -3,6 +3,9 @@ let CurrencyRate = db['CurrencyRate'];
 let OperationLog = db['OperationLog'];
 
 module.exports = {
+	findAll: function () {
+		return CurrencyRate.findAll();
+	},
 	addRates: function(currency, rates) {
 		return CurrencyRate.create({
 			currency: currency,

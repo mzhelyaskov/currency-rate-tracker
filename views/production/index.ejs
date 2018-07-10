@@ -15,8 +15,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-5">
+        <div class="col-6">
             <h2>Rate history:</h2>
+            <div id="currency-chart" style="height: 250px;"></div>
             <div class="table-container">
                 <table class="table table-sm">
                     <thead>
@@ -41,9 +42,8 @@
                     </tbody>
                 </table>
             </div>
-            <div id="currency-chart" style="height: 250px;"></div>
         </div>
-        <div class="col-7">
+        <div class="col-6">
             <% if (resetLogBtnExist) { %>
             <a href="/" class="float-right">Reset filter</a>
             <% } %>
@@ -51,10 +51,10 @@
             <table class="table table-sm table-striped table-header">
                 <thead>
                 <tr>
-                    <th scope="col" width="120px">OperationId</th>
-                    <th scope="col" width="120px">Timestamp</th>
-                    <th scope="col" width="220px">OperationName</th>
-                    <th scope="col" width="120px">Status</th>
+                    <th scope="col" width="90px">OperationId</th>
+                    <th scope="col" width="90px">Timestamp</th>
+                    <th scope="col" width="160px">OperationName</th>
+                    <th scope="col" width="80px">Status</th>
                     <th scope="col">Description</th>
                 </tr>
                 </thead>
@@ -64,10 +64,10 @@
                     <tbody>
                     <% logs.forEach(function(log){ %>
                     <tr class="<%= log.status === 'ERROR' ? 'warning-row' : ''%>">
-                        <td width="120px"><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
-                        <td width="120px"><%= log.timestamp %></td>
-                        <td width="220px"><%= log.operationName %></td>
-                        <td width="120px"><%= log.status %></td>
+                        <td width="90px"><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
+                        <td width="90px"><%= log.timestamp %></td>
+                        <td width="160px"><%= log.operationName %></td>
+                        <td width="80px"><%= log.status %></td>
                         <td><%= log.description %></td>
                     </tr>
                     <% }); %>

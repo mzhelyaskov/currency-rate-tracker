@@ -1,8 +1,5 @@
 let express = require('express');
 let router = express.Router();
-let db = require('../db');
-let CurrencyRate = db['CurrencyRate'];
-let OperationLog = db['OperationLog'];
 let RatesGetter = require('../dto/ratesGetter');
 let LogGetter = require('../dto/logGetter');
 let async = require("async");
@@ -32,6 +29,12 @@ router.get('/', function (req, res) {
 			rates: results.rates,
 			logs: results.logs
 		});
+	});
+});
+
+router.get('/getRatesForChart', function (req, res) {
+	RatesGetter.getDateToAverageRate().then(dateToAvgRate => {
+		res.json(dateToAvgRate);
 	});
 });
 
