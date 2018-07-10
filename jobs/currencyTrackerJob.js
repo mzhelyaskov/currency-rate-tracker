@@ -41,13 +41,14 @@ function doTracking(logger) {
 		},
 		prevRates: function(callback) {
 			CurrencyService.findPreviousRates(currency).then(rates => {
+				let date = dateformat(rates.createdAt, 'yy-mm-dd');
 				let buyRate = rates && rates.buyRate || 0;
 				let saleRate = rates && rates.saleRate || 0;
 				logger.success({
 					operationName: `Got prev rates for ${currency}`,
 					description: `Previous rates ${buyRate} / ${saleRate}`
 				});
-				callback(null, {buyRate, saleRate});
+				callback(null, {date, buyRate, saleRate});
 			});
 		}
 	}, function(err, results) {
@@ -75,7 +76,7 @@ function doTracking(logger) {
 	});
 }
 
-function areRatesDifferent(current, previous) {
+function areRatesDifferent(previous, current) {
 	if (previous === current) {
 		return false;
 	}
@@ -85,6 +86,5 @@ function areRatesDifferent(current, previous) {
 	if (current.buyRate !== previous.buyRate || current.saleRate !== previous.saleRate) {
 		return true;
 	}
-	let currDate = dateformat(current.createdAt, 'yy-mm-dd');
-	return currDate !== previous.date;
+	return previous.date !== current.date;
 }
