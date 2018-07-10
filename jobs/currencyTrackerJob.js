@@ -44,7 +44,7 @@ function doTracking(logger) {
 		},
 		prevRates: function(callback) {
 			CurrencyService.findPreviousRates(currency).then(rates => {
-				let date = dateformat(rates.createdAt, 'yyyy-mm-dd');
+				let date = rates && dateformat(rates.createdAt, 'yyyy-mm-dd') || null;
 				let buyRate = rates && rates.buyRate || 0;
 				let saleRate = rates && rates.saleRate || 0;
 				logger.success({

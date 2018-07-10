@@ -6,6 +6,7 @@
     "host": "localhost",
     "dialect": "mysql",
     "define": {
+      "timestamps": true,
       "underscored": true,
       "freezeTableName": true
     }
@@ -17,6 +18,7 @@
     "host": "db4free.net",
     "dialect": "mysql",
     "define": {
+      "timestamps": true,
       "underscored": true,
       "freezeTableName": true
     },

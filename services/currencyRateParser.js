@@ -1,7 +1,6 @@
 let requestPromies = require('request-promise');
 let cheerio = require('cheerio');
 let uri = 'http://kantor.waw.pl/';
-let dateformat = require('dateformat');
 
 const currencyRateSelectors = {
 	'USD': {

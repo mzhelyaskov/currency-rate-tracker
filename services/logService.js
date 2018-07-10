@@ -1,6 +1,10 @@
 let OperationLog = require('../db')['OperationLog'];
+let shortid = require('shortid');
 
 module.exports = {
+	getDefault: function () {
+		return new Logger();
+	},
 	getLogger: function (operationsId) {
 		return new Logger(operationsId);
 	}
@@ -37,11 +41,18 @@ class Logger {
 	}
 
 	log(parameters) {
+		let self = this;
 		OperationLog.create({
-			operationId: this.operationId,
+			operationId: this.operationId || `dev_${shortid.generate()}`,
 			operationName: parameters.operationName,
 			status: parameters.status,
 			description: parameters.description
+		}).catch(error => {
+			console.error('OperationLog.create', error.message);
+			self.error({
+				operationName: 'OperationLog.create',
+				description: error.message
+			})
 		});
 	}
 }
