@@ -7,7 +7,7 @@ let _ = require('lodash');
 module.exports = {
 	getAll: function () {
 		return CurrencyService.findAll({
-			order: [['id', 'ASC']]
+			order: [['id', 'DESC']]
 		}).then(rates => {
 			return rates.map((rate, index) => {
 				return convertToDTO(index + 1, rate);

@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
 			RatesGetter.getAll().then(rates => callback(null, rates));
 		},
 		logs: function(callback) {
-			LogGetter.getLast(50, operationId).then(logs => callback(null, logs));
+			LogGetter.getLast(operationId).then(logs => callback(null, logs));
 		}
 	}, function(err, results) {
 		if (err) {

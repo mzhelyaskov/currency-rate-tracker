@@ -1,5 +1,5 @@
 $(function () {
-	$('.table-container').animate({ scrollTop: 9999 }, "slow");
+	//$('.table-container').animate({ scrollTop: 9999 }, "slow");
 
 	var expectedRates = {
 		'2018-07-09': {value: 3700},

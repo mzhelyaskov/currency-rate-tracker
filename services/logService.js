@@ -19,7 +19,7 @@ class Logger {
 	success(parameters) {
 		this.log({
 			operationName: parameters.operationName,
-			status: 'SUCCESS',
+			status: 'S',
 			description: parameters.description
 		});
 	}
@@ -27,7 +27,7 @@ class Logger {
 	error(parameters) {
 		this.log({
 			operationName: parameters.operationName,
-			status: 'ERROR',
+			status: 'E',
 			description: parameters.description
 		});
 	}
@@ -35,7 +35,7 @@ class Logger {
 	info(parameters) {
 		this.log({
 			operationName: parameters.operationName,
-			status: 'INFO',
+			status: 'I',
 			description: parameters.description
 		});
 	}
@@ -43,7 +43,7 @@ class Logger {
 	log(parameters) {
 		let self = this;
 		OperationLog.create({
-			operationId: this.operationId || `dev_${shortid.generate()}`,
+			operationId: this.operationId || `$${shortid.generate()}`,
 			operationName: parameters.operationName,
 			status: parameters.status,
 			description: parameters.description
