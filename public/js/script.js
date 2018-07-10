@@ -33,7 +33,7 @@ $(function () {
 			data: getChartRates(currentRates),
 			xLabelAngle: 60,
 			ymin: 3500,
-			ymax: 4000,
+			ymax: 3800,
 			xkey: 'x',
 			ykeys: ['y', 'z'],
 			labels: ['Expected', 'Current'],
