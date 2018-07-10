@@ -69,7 +69,7 @@ function doTracking(logger) {
 			});
 		} else {
 			logger.success({
-				operationName: `Parse finished`,
+				operationName: `Parsing finished`,
 				description: `Rates haven't changed.`
 			});
 		}
