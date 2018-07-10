@@ -1,7 +1,7 @@
 let requestPromies = require('request-promise');
 let cheerio = require('cheerio');
 let uri = 'http://kantor.waw.pl/';
-let dateFormat = require('dateFormat');
+let dateformat = require('dateformat');
 
 const currencyRateSelectors = {
 	'USD': {
@@ -25,7 +25,7 @@ module.exports = {
 				let buyRate = parseFloat($(selector.buy).html());
 				let saleRate = parseFloat($(selector.sale).html());
 				return {
-					date: dateFormat(new Date(), 'yy-mm-dd'),
+					date: dateformat(new Date(), 'yy-mm-dd'),
 					buyRate: buyRate,
 					saleRate: saleRate
 				}
