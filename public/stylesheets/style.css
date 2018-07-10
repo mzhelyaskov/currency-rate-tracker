@@ -13,9 +13,8 @@ a {
   margin-bottom: 0;
   position: relative; }
 
-.table-container td, .table-container th {
-  border-left: 1px solid #c5c5c5;
-  border-bottom: 1px solid #c5c5c5; }
+table td, table th {
+  border: 1px solid #c5c5c5; }
 
 .warning-row {
   background-color: #ffe2ea !important; }

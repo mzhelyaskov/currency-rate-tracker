@@ -23,60 +23,56 @@
         <div class="col-7">
             <h2>Rate history:</h2>
             <div id="currency-chart" style="height: 250px;"></div>
-            <div class="table-container">
-                <table class="table table-sm table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Timestamp</th>
-                        <th scope="col">Currency</th>
-                        <th scope="col">Buy</th>
-                        <th scope="col">Sale</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% rates.forEach(function(rate){ %>
-                    <tr>
-                        <th scope="row"><%= rate.row %></th>
-                        <td><%= rate.timestamp %></td>
-                        <td><%= rate.currency %></td>
-                        <td><%= rate.buy %></td>
-                        <td><%= rate.sale %></td>
-                    </tr>
-                    <% }); %>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-sm table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Timestamp</th>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Buy</th>
+                    <th scope="col">Sale</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% rates.forEach(function(rate){ %>
+                <tr>
+                    <th scope="row"><%= rate.row %></th>
+                    <td><%= rate.timestamp %></td>
+                    <td><%= rate.currency %></td>
+                    <td><%= rate.buy %></td>
+                    <td><%= rate.sale %></td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
         </div>
         <div class="col-5">
             <% if (resetLogBtnExist) { %>
             <a href="/" class="float-right">Reset filter</a>
             <% } %>
             <h2>Operation log:</h2>
-            <div class="table-container">
-                <table class="table table-sm table-striped">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Time</th>
-                        <th>Operation</th>
-                        <th>S</th>
-                        <th>Description</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% logs.forEach(function(log){ %>
-                    <tr class="<%= log.status === 'E' ? 'warning-row' : ''%>">
-                        <td><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
-                        <td><%= log.timestamp %></td>
-                        <td><%= log.operationName %></td>
-                        <td><%= log.status %></td>
-                        <td><%= log.description %></td>
-                    </tr>
-                    <% }); %>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-sm table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Time</th>
+                    <th>Operation</th>
+                    <th>S</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% logs.forEach(function(log){ %>
+                <tr class="<%= log.status === 'E' ? 'warning-row' : ''%>">
+                    <td><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
+                    <td><%= log.timestamp %></td>
+                    <td><%= log.operationName %></td>
+                    <td><%= log.status %></td>
+                    <td><%= log.description %></td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
