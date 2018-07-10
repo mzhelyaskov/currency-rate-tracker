@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		createdAt: {
 			type: DataTypes.DATE,
-			field: 'created_at'
+			field: 'created_at',
+			set(date) {
+				date.setTime(date.getTime() + (2 * 60 * 60 * 1000));
+				this.setDataValue('createdAt', date);
+			}
 		},
 		operationName: {
 			type: DataTypes.STRING,

@@ -19,6 +19,11 @@
     "define": {
       "underscored": true,
       "freezeTableName": true
+    },
+    "pool": {
+      "max": 5,
+      "idle": 30000,
+      "acquire": 60000
     }
   }
 }
