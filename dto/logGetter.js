@@ -5,14 +5,15 @@ let moment = require('moment');
 const Op = db.Sequelize.Op;
 
 module.exports = {
-	getLast: function (operationId) {
+	getLog: function (operationId) {
 		return OperationLog.findAll({
 			where: getWhereConditions(operationId),
 			limit: 50,
 			order: [['id', 'DESC']]
 		}).then(rows => {
-			return rows.map((row, index) => {
-				return convertToDTO(index + 1, row);
+			let length = rows.length;
+			return rows.map(row => {
+				return convertToDTO(length--, row);
 			});
 		});
 	}
@@ -28,9 +29,9 @@ function getWhereConditions(operationId) {
 	return where;
 }
 
-function convertToDTO(index, row) {
+function convertToDTO(rowNum, row) {
 	return {
-		rowNum: index,
+		rowNum: rowNum,
 		id: row.id,
 		operationId: row.operationId,
 		timestamp: dateformat(row.created_at, 'HH:MM'),

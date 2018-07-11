@@ -9,8 +9,9 @@ module.exports = {
 		return CurrencyService.findAll({
 			order: [['id', 'DESC']]
 		}).then(rates => {
-			return rates.map((rate, index) => {
-				return convertToDTO(index + 1, rate);
+			let length = rates.length;
+			return rates.map(rate => {
+				return convertToDTO(length--, rate);
 			});
 		});
 	},
@@ -42,9 +43,9 @@ function convertToChardDTO(rate) {
 	}
 }
 
-function convertToDTO(row, rate) {
+function convertToDTO(rowNum, rate) {
 	return {
-		row: row,
+		rowNum: rowNum,
 		id: rate.id,
 		timestamp: dateformat(rate.created_at, 'yy-mm-dd HH:MM'),
 		currency: rate.currency,

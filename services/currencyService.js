@@ -3,8 +3,8 @@ let CurrencyRate = db['CurrencyRate'];
 let Logger = require('../services/logService').getDefault();
 
 module.exports = {
-	findAll: function () {
-		return CurrencyRate.findAll().catch(error => {
+	findAll: function (params) {
+		return CurrencyRate.findAll(params).catch(error => {
 			Logger.error({
 				operationName: 'CurrencyRate.findAll',
 				description: error.message

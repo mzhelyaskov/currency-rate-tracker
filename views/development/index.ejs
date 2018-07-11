@@ -54,6 +54,7 @@
             <table class="table table-sm table-striped">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th>Id</th>
                     <th>Time</th>
                     <th>Operation</th>
@@ -64,6 +65,7 @@
                 <tbody>
                 <% logs.forEach(function(log){ %>
                 <tr class="<%= log.status === 'E' ? 'warning-row' : ''%>">
+                    <td><%= log.rowNum %></td>
                     <td><a href="/?operationId=<%= log.operationId %>"><%= log.operationId %></a></td>
                     <td><%= log.timestamp %></td>
                     <td><%= log.operationName %></td>
