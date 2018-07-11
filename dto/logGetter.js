@@ -1,6 +1,5 @@
 let db = require('../db');
 let OperationLog = db['OperationLog'];
-let dateformat = require('dateformat');
 let moment = require('moment');
 const Op = db.Sequelize.Op;
 
@@ -33,7 +32,7 @@ function convertToDTO(rowNum, row) {
 	return {
 		rowNum: rowNum,
 		operationId: row.operationId,
-		timestamp: dateformat(row.created_at, 'HH:MM'),
+		timestamp: moment(row.created_at).add(2, 'hour').format('HH:mm'),
 		operationName: row.operationName,
 		status: row.status,
 		description: row.description
