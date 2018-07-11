@@ -31,13 +31,6 @@ module.exports = (sequelize, DataTypes) => {
 			field: 'sale_rate'
 		}
 	}, {
-		tableName: 'currency_rate',
-		getterMethods: {
-			createdAt: function () {
-				let date = this.getDataValue('created_at');
-				date.setTime(date.getTime() + (2 * 60 * 60 * 1000));
-				return date;
-			}
-		}
+		tableName: 'currency_rate'
 	})
 };

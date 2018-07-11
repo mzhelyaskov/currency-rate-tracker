@@ -21,13 +21,6 @@ module.exports = (sequelize, DataTypes) => {
 		status: DataTypes.STRING,
 		description: DataTypes.STRING
 	}, {
-		tableName: 'operation_log',
-		getterMethods: {
-			createdAt: function () {
-				let date = this.getDataValue('created_at');
-				date.setTime(date.getTime() + (2 * 60 * 60 * 1000));
-				return date;
-			}
-		}
+		tableName: 'operation_log'
 	});
 };
