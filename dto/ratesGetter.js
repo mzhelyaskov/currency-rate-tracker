@@ -2,6 +2,7 @@ let db = require('../db');
 let CurrencyRate = db['CurrencyRate'];
 let CurrencyService = require('../services/currencyService');
 let dateformat = require('dateformat');
+let moment = require('moment');
 let _ = require('lodash');
 
 module.exports = {
@@ -38,7 +39,7 @@ function getAverageRates(rates) {
 
 function convertToChardDTO(rate) {
 	return {
-		date: dateformat(rate.created_at, 'yyyy-mm-dd'),
+		date: moment(rate.created_at).add(2, 'hour').format('YYYY-MM-DD'),
 		buyRate: rate.buyRate
 	}
 }
@@ -46,7 +47,7 @@ function convertToChardDTO(rate) {
 function convertToDTO(rowNum, rate) {
 	return {
 		rowNum: rowNum,
-		timestamp: dateformat(rate.created_at, 'yy-mm-dd HH:MM'),
+		timestamp: moment(rate.created_at).add(2, 'hour').format('YYYY-MM-DD HH:mm'),
 		currency: rate.currency,
 		buy: rate.buyRate,
 		sale: rate.saleRate
