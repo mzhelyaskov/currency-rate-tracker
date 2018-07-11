@@ -46,7 +46,6 @@ function convertToChardDTO(rate) {
 function convertToDTO(rowNum, rate) {
 	return {
 		rowNum: rowNum,
-		id: rate.id,
 		timestamp: dateformat(rate.created_at, 'yy-mm-dd HH:MM'),
 		currency: rate.currency,
 		buy: rate.buyRate,

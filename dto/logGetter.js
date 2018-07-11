@@ -32,7 +32,6 @@ function getWhereConditions(operationId) {
 function convertToDTO(rowNum, row) {
 	return {
 		rowNum: rowNum,
-		id: row.id,
 		operationId: row.operationId,
 		timestamp: dateformat(row.created_at, 'HH:MM'),
 		operationName: row.operationName,
