@@ -12,6 +12,7 @@ let Logger = require('../services/logService').getDefault();
 console.log(`Environment: ${env}`);
 
 process.on('uncaughtException', (error) => {
+	console.error('Uncaught Exception');
 	Logger.error({
 		operationName: 'Uncaught Exception',
 		description: error.message
