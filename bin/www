@@ -7,8 +7,16 @@ let app = require('../app');
 let http = require('http');
 let env = process.env.NODE_ENV || 'development';
 let CurrencyTrackerJob = require('../jobs/currencyTrackerJob');
+let Logger = require('../services/logService').getDefault();
 
 console.log(`Environment: ${env}`);
+
+process.on('uncaughtException', (error) => {
+	Logger.error({
+		operationName: 'Uncaught Exception',
+		description: error.message
+	})
+});
 
 /**
  * Get port from environment and store in Express.
