@@ -25,8 +25,8 @@
       "freezeTableName": true
     },
     "pool": {
-      "max": 5,
-      "idle": 30000,
+      "max": 10,
+      "idle": 1,
       "acquire": 60000
     }
   }
